@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=Familjen+Grotesk:ital,wght@0,400..700;1,400..600&family=Martian+Mono:wght@300;400;500;600&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --color-paper: #eeeae0;
+  --color-paper-dim: #e3ded1;
+  --color-paper-line: #cfc8b7;
+  --color-ink: #16150f;
+  --color-ink-soft: #201e16;
+  --color-ink-line: #383528;
+  --color-accent: #ff3d00;
+  --color-accent-deep: #c22f00;
+  --color-mute: #6a6455;
+  --color-mute-ink: #9d9583;
+
+  --font-display: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
+  --font-sans: 'Familjen Grotesk', system-ui, sans-serif;
+  --font-mono: 'Martian Mono', ui-monospace, monospace;
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-snap: cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-paper);
+}
+
+/* Martian Mono runs wide; pull it back so small labels stay compact. */
+.mono {
+  font-family: var(--font-mono);
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* Paper grain — a single fixed overlay, so the ground never reads as flat #fff. */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.32;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+.scroll-quiet::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scroll-quiet::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 999px;
+}
+.scroll-quiet:hover::-webkit-scrollbar-thumb,
+.scroll-quiet:focus-within::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-mute) 45%, transparent);
+}
+
+/* ------------------------------------------------------------- motion */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Rows are revealed by unmasking left-to-right, like a printer laying ink. */
+@keyframes print-row {
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
+}
+
+@keyframes strike-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(26px);
+  }
+}
+
+@keyframes bar-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Vertical twin of bar-grow, for the month-trend columns. */
+@keyframes bar-grow-y {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes ticker-run {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes caret {
+  0%,
+  48% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes stamp {
+  0% {
+    transform: scale(2.4) rotate(-18deg);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(0.92) rotate(2deg);
+    opacity: 1;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes flash-accent {
+  0% {
+    background-color: color-mix(in srgb, var(--color-accent) 26%, transparent);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.anim-rise {
+  animation: rise 620ms var(--ease-expo) both;
+}
+.anim-slide {
+  animation: slide-in 520ms var(--ease-expo) both;
+}
+.anim-print {
+  animation: print-row 460ms var(--ease-expo) both;
+}
+.anim-strike {
+  animation: strike-out 260ms ease-in forwards;
+}
+.anim-stamp {
+  animation: stamp 700ms var(--ease-snap) both;
+}
+.anim-flash {
+  animation: flash-accent 1100ms ease-out both;
+}
+.anim-bar {
+  transform-origin: left center;
+  animation: bar-grow 760ms var(--ease-expo) both;
+}
+.anim-bar-y {
+  transform-origin: center bottom;
+  animation: bar-grow-y 760ms var(--ease-expo) both;
+}
+.anim-caret {
+  animation: caret 1.05s step-end infinite;
+}
+.ticker-track {
+  animation: ticker-run 46s linear infinite;
+}
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+/* Underline that draws in from the left on hover. */
+.rule-sweep {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size 340ms var(--ease-expo);
+}
+.rule-sweep:hover,
+.rule-sweep:focus-visible {
+  background-size: 100% 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .ticker-track {
+    animation: none;
+  }
+}
