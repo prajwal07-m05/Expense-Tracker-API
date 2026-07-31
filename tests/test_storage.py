@@ -84,3 +84,4 @@ def test_list_filters_by_normalised_category(repo: ExpenseRepository) -> None:
     repo.add(make(category="  food  "))
     repo.add(make(category="Transport"))
     assert len(repo.list(category="FOOD")) == 2
+# Additional test case
