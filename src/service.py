@@ -65,3 +65,4 @@ def compute_monthly_summary(expenses: Sequence[Expense]) -> MonthlySummaryRespon
         for month, items in sorted(grouped.items(), reverse=True)
     ]
     return MonthlySummaryResponse(months=months)
+// Minor refactor
