@@ -1,4 +1,4 @@
-# Smart Expense Tracker API
+# Smart Expense Tracker API (app)
 
 A small REST API for tracking personal expenses, built with **Python 3.10+ / FastAPI**.
 Expenses are persisted to a local JSON file — no database required.
