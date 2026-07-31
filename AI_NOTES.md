@@ -1,6 +1,6 @@
 # AI_NOTES.md
 
-## How I built this
+## How I built this project
 
 I used an AI assistant (Claude) heavily on this project. I want to be upfront about
 that, because pretending otherwise would be both dishonest and pretty easy to spot.
